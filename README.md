@@ -1,202 +1,219 @@
-# E-commerce Product Review System — Software Quality Engineering
+# E-commerce Product Review System
 
-A FastAPI-based e-commerce product review system developed as a **Software Quality Engineering (SQE)** course project. The project focuses not only on application development but also on **software testing, test automation, API validation, performance testing, test reporting, and Continuous Integration (CI)**.
+A software quality engineering project focused on developing and testing a web-based **E-commerce Product Review System** using FastAPI. The project emphasizes backend development, automated testing, API validation, UI testing, continuous integration, and performance testing.
+
+> **Project Type:** Academic Group Project
+> **Team Size:** 2 members
+
+---
 
 ## Overview
 
-The system provides a simple web interface and REST API for viewing products and submitting product reviews. Product data and reviews are stored in a JSON file, while the application uses Pydantic models for data validation.
+The E-commerce Product Review System provides a simple platform for managing products and submitting product reviews.
 
-The primary focus of this project is applying software quality practices to a working application through multiple levels of testing and automated validation.
+The project was developed with a strong focus on **Software Quality Engineering (SQE)** practices rather than only application development. Alongside the FastAPI application, the project includes multiple levels of automated testing, API validation, UI testing, continuous integration, and performance testing.
+
+---
 
 ## Key Features
 
-* FastAPI backend with REST API endpoints
-* Server-rendered web pages using Jinja2 templates
-* Product listing and product detail pages
-* Product review submission with rating validation
+* Product listing and product-specific pages
+* Product review submission
+* RESTful API endpoints
+* Server-rendered HTML pages using Jinja2
 * Pydantic-based data models
-* Automated API testing with `pytest`
-* UI test automation with Selenium
-* API validation using Postman
-* Performance testing using ApacheBench (`ab`)
-* HTML test report generation
-* Timestamped performance test reports
-* Local CI test runner script
-* GitHub Actions workflow for automated CI testing
-* Automated test report artifact generation
+* Automated unit and integration testing
+* Selenium-based UI testing
+* Postman API collection
+* GitHub Actions CI workflow
+* Performance testing with ApacheBench
+* Automated HTML test reports
+* JSON-based product data storage
 
-## Testing & Quality Assurance
+---
 
-The project implements testing at multiple levels to evaluate application correctness and behavior.
+## Technology Stack
 
-### API Testing
+### Backend
 
-The `pytest` API test suite verifies:
+* Python
+* FastAPI
+* Uvicorn
+* Pydantic
+* Jinja2
 
-* Successful retrieval of all products
-* Retrieval of individual products
-* Handling of non-existent products
-* Successful review submission
-* Missing review validation
-* Missing rating validation
-* Invalid rating values
-* Appropriate HTTP status codes
+### Testing & Quality Assurance
 
-The tests use FastAPI's `TestClient` to test the application endpoints directly.
+* pytest
+* Selenium
+* Chrome / ChromeDriver
+* Postman
+* ApacheBench
+
+### DevOps & Automation
+
+* GitHub Actions
+* Bash scripting
+* Automated test execution
+* HTML test reporting
+
+### Data Storage
+
+* JSON
+
+---
+
+## Application Structure
+
+The application provides both web pages and API endpoints.
+
+### Web Interface
+
+* Home page
+* Product detail pages
+* Product review submission
+
+### API
+
+The backend exposes endpoints for:
+
+* Retrieving all products
+* Retrieving individual products
+* Managing product reviews
+
+The API and web interface share the same backend application.
+
+---
+
+## Testing
+
+Testing was a major component of the project, covering multiple levels of the application.
+
+### Unit & Integration Testing
+
+The project uses **pytest** for automated API and application testing.
+
+```bash
+pytest tests/test_api.py -q
+```
 
 ### UI Testing
 
-Selenium is used to automate a browser-based user interaction:
+A Selenium-based test automates the process of submitting a product review through the web interface.
 
-1. Open a product page
-2. Enter a product review
-3. Select a rating
-4. Submit the review
-5. Verify that the submitted review appears on the page
+```bash
+pytest tests/test_ui_selenium.py -q
+```
 
-This provides an example of automated end-to-end UI testing.
+The Selenium test requires Chrome and a compatible ChromeDriver installation.
 
-### API Validation with Postman
+### Test Reporting
 
-A Postman collection is included for manually validating the application's API endpoints.
+The project can generate HTML test reports for easier inspection of test results.
 
-The collection contains requests for:
+```bash
+PYTHONPATH=$(pwd) pytest -q --html=reports/report.html
+```
 
-* `GET /api/products`
-* `GET /api/products/{id}`
-* `POST /product/{id}/reviews`
+---
 
-This provides an additional method of validating API behavior outside the automated test suite.
+## API Testing
 
-### Performance Testing
+A **Postman collection** is included for validating the application's API endpoints.
 
-The `performance_tests.sh` script uses **ApacheBench (`ab`)** to evaluate the performance of selected endpoints.
+```text
+postman_collection.json
+```
 
-The following scenarios are tested:
+The collection can be imported into Postman to execute and verify the available API operations.
 
-* `GET /api/products` — 100 requests with 10 concurrent requests
-* `GET /api/products/1` — 100 requests with 10 concurrent requests
-* `POST /product/1/reviews` — 50 requests with 5 concurrent requests
-
-Performance results are automatically stored in timestamped directories containing raw output and Markdown reports.
+---
 
 ## Continuous Integration
 
-The repository includes a **GitHub Actions CI workflow** that runs automatically on:
+The repository includes a **GitHub Actions workflow** that automatically runs the test suite.
 
-* Pushes to the repository
-* Pull requests
+This demonstrates the use of automated quality checks as part of the development workflow.
 
-The workflow:
+```text
+Code Change
+     │
+     ▼
+GitHub Repository
+     │
+     ▼
+GitHub Actions
+     │
+     ▼
+Automated Tests
+     │
+     ▼
+Test Results
+```
 
-1. Checks out the repository
-2. Sets up Python 3.13
-3. Creates a virtual environment
-4. Installs project dependencies
-5. Starts the FastAPI application
-6. Executes the complete `pytest` suite
-7. Generates an HTML test report
-8. Stops the application server
-9. Uploads the test report as a GitHub Actions artifact
+---
 
-This provides automated verification of the application whenever changes are pushed or proposed through a pull request.
+## Performance Testing
 
-## Local CI Runner
+The project also includes performance testing scripts using **ApacheBench (ab)**.
 
-The `ci_run.sh` script provides a local equivalent of the CI testing process.
+Performance test results are stored in the repository under:
 
-It:
+```text
+performance_reports/
+```
 
-* Activates the Python virtual environment
-* Starts the FastAPI server
-* Runs the complete test suite
-* Generates an HTML report
-* Stops the server after testing
+The project therefore considers not only functional correctness but also application performance under request load.
 
-## Project Structure
+---
+
+## Software Quality Engineering Practices
+
+The project demonstrates several practical SQE concepts:
+
+* Unit testing
+* Integration testing
+* End-to-end UI testing
+* API testing
+* Automated testing
+* Continuous integration
+* Test reporting
+* Performance testing
+* Regression-oriented automated checks
+* Quality assurance through multiple testing layers
+
+---
+
+## Repository Structure
 
 ```text
 SQE-Ecommerce-Review-Project/
 │
 ├── .github/
 │   └── workflows/
-│       └── pytest.yml
 │
 ├── app/
-│   ├── static/
-│   ├── templates/
-│   ├── __init__.py
-│   ├── main.py
-│   └── models.py
 │
 ├── performance_reports/
-│   └── <timestamp>/
-│       └── ...
 │
 ├── test_reports/
-│   ├── assets/
-│   └── report.html
 │
 ├── tests/
-│   ├── conftest.py
-│   ├── test_api.py
-│   └── test_ui_selenium.py
 │
-├── .gitignore
+├── Ecommerce_Product_Review_System_Documentation.docx
 ├── ci_run.sh
 ├── performance_tests.sh
 ├── postman_collection.json
 ├── products.json
 ├── requirements.txt
-├── Ecommerce_Product_Review_System_Documentation.docx
 └── README.md
 ```
 
-## Application Architecture
+---
 
-The application is implemented using **FastAPI** and consists of:
+## Running Locally
 
-* **FastAPI application** — handles HTTP requests and API routes
-* **Pydantic models** — defines product and review data structures
-* **Jinja2 templates** — renders the web interface
-* **JSON data storage** — stores product and review information
-* **Pytest** — automated API and integration testing
-* **Selenium** — browser-based UI automation
-* **Postman** — API validation
-* **ApacheBench** — performance testing
-* **GitHub Actions** — continuous integration
-
-## API Endpoints
-
-| Method | Endpoint                        | Purpose                     |
-| ------ | ------------------------------- | --------------------------- |
-| `GET`  | `/api/products`                 | Retrieve all products       |
-| `GET`  | `/api/products/{product_id}`    | Retrieve a specific product |
-| `POST` | `/product/{product_id}/reviews` | Submit a product review     |
-| `GET`  | `/`                             | Product listing web page    |
-| `GET`  | `/product/{product_id}`         | Product detail web page     |
-
-### Review Validation
-
-Review submissions validate:
-
-* Presence of review text
-* Presence of rating
-* Rating range from **1 to 5**
-* Existence of the requested product
-
-Invalid requests return appropriate HTTP error responses.
-
-## Running the Project
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/bsef23m509/SQE-Ecommerce-Review-Project.git
-cd SQE-Ecommerce-Review-Project
-```
-
-### 2. Create a Virtual Environment
+### 1. Create a virtual environment
 
 ```bash
 python -m venv .venv
@@ -204,7 +221,7 @@ python -m venv .venv
 
 Activate it:
 
-**Linux / macOS**
+**Linux/macOS**
 
 ```bash
 source .venv/bin/activate
@@ -216,13 +233,13 @@ source .venv/bin/activate
 .venv\Scripts\activate
 ```
 
-### 3. Install Dependencies
+### 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Start the Application
+### 3. Start the application
 
 ```bash
 uvicorn app.main:app --reload --port 8000
@@ -234,102 +251,48 @@ The application will be available at:
 http://localhost:8000
 ```
 
-## Running Tests
+---
 
-### Run API Tests
+## Project Documentation
 
-```bash
-pytest tests/test_api.py -q
-```
-
-### Run Selenium UI Tests
-
-The Selenium test requires a compatible Chrome/ChromeDriver setup.
-
-```bash
-pytest tests/test_ui_selenium.py -q
-```
-
-### Run the Complete Test Suite
-
-```bash
-PYTHONPATH=$(pwd) pytest -q --html=test_reports/report.html
-```
-
-### Run the Local CI Script
-
-```bash
-./ci_run.sh
-```
-
-### Run Performance Tests
-
-ApacheBench (`ab`) must be installed and available in the system PATH.
-
-```bash
-./performance_tests.sh
-```
-
-Performance reports are generated under:
-
-```text
-performance_reports/<timestamp>/
-```
-
-## Test Reporting
-
-The project generates HTML test reports using `pytest-html`.
-
-Reports can be found under:
-
-```text
-test_reports/report.html
-```
-
-GitHub Actions also uploads the generated test report as a workflow artifact, allowing test results to be inspected after a CI run.
-
-## Documentation
-
-The repository includes additional project documentation:
+The repository also contains the project documentation:
 
 ```text
 Ecommerce_Product_Review_System_Documentation.docx
 ```
 
-The documentation provides supplementary material related to the system and its software quality/testing work.
+This document provides additional details about the system and project work.
 
-## Technologies & Tools
+---
 
-* **Python**
-* **FastAPI**
-* **Pydantic**
-* **Jinja2**
-* **Pytest**
-* **pytest-html**
-* **Selenium**
-* **Postman**
-* **ApacheBench**
-* **GitHub Actions**
-* **HTML / CSS / JavaScript**
+## Team
+
+This was a **two-member academic group project** developed as part of the Software Quality Engineering course.
+
+The project provided practical experience in combining backend development with systematic software testing and quality assurance practices.
+
+---
+
+## Academic Context
+
+**Course:** Software Quality Engineering (SQE)
+**Project Type:** Group Academic Project
+**Team Size:** 2 members
+**Primary Focus:** Backend Development, Software Testing & Quality Assurance
+
+---
 
 ## Learning Outcomes
 
-This project provided practical experience with:
+Through this project, we gained practical experience with:
 
-* Designing and testing REST APIs
-* Unit and integration testing
-* Automated browser-based testing
-* API testing with Postman
-* Test-driven quality validation
-* Test report generation
-* Performance and load testing
-* Continuous Integration workflows
-* Automating application testing through shell scripts
-* Structuring software quality documentation
-* Integrating testing into a software development workflow
-
-## Course Context
-
-This project was developed as part of the **Software Quality Engineering (SQE)** coursework during my BS Software Engineering studies.
-
-The repository is maintained as an academic record of the implementation, testing strategies, automation, documentation, and quality assurance practices explored during the course.
+* Building REST APIs with FastAPI
+* Structuring a Python backend application
+* Writing automated tests with pytest
+* Performing integration testing
+* Automating browser-based tests with Selenium
+* Validating APIs using Postman
+* Automating tests through GitHub Actions
+* Generating test reports
+* Performing basic performance testing
+* Applying software quality engineering practices to a working application
